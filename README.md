@@ -1,6 +1,12 @@
 
 fsm is a simple and easy to use finite state machine implement.
 
+# Install
+
+```bash
+wget https://raw.githubusercontent.com/3vilive/fsm/master/fsm.py
+```
+
 # Usage
 
 ```python
