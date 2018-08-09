@@ -1,4 +1,5 @@
 import functools
+import weakref
 import enum
 from typing import Mapping, List, Callable, Optional, Hashable
 from collections import defaultdict
@@ -54,9 +55,20 @@ class FSM(object):
         self.set_state(next_state)
         self.command(StateEnter, args=(prev_state, next_state))
 
+    def _weak_ref_transit_to(self):
+        self_ref = weakref.ref(self)
+        def wrapper(state: Hashable):
+            fsm_obj = self_ref()
+            if fsm_obj is None:
+                return
+
+            fsm_obj.transit_to(state)
+
+        return wrapper
+
     def on(self, state: Hashable, event: str, action: Optional[Callable]=None, transition: Optional[Hashable]=None):
         if transition is not None:
-            action = functools.partial(self.transit_to, transition)
+            action = functools.partial(self._weak_ref_transit_to(), transition)
 
         emitter = self._state_evt_emitters[state]
         emitter.on(event, action)
