@@ -12,7 +12,7 @@ class HandlerNotFoundError(Exception):
 
 class EventEmitter(object):
     def __init__(self):
-        self._event_handlers = {}  # Type: dict{str: Callable}
+        self._event_handlers = {}  # type: Dict[Hashable: Callable]
 
     def on(self, event: str, handler: Callable):
         if not isinstance(handler, Callable):
