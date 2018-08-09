@@ -24,7 +24,7 @@ print(test_fsm.state) # State1
 test_fsm.command('move')
 print(test_fsm.state) # State2
 
-test_fsm.command('move', args=('Hello FSM!', test_fsm)) # got input Hello FSM!
+test_fsm.command('move', args=('Hello FSM!', test_fsm)) # Got input Hello FSM!
 print(test_fsm.state) # State1
 ```
 
